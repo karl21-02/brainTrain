@@ -1,4 +1,4 @@
-package com.example.braintrain.ui.gallery;
+package com.example.braintrain.ui.game;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,8 +7,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +19,7 @@ import com.example.braintrain.R;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GalleryFragment extends Fragment {
+public class GameFragment extends Fragment {
 
     TextView textView;
 
@@ -39,7 +37,7 @@ public class GalleryFragment extends Fragment {
     TextView text8;
     TextView text9;
 
-    boolean time_end_exit;
+    boolean time_end_exit = true;
 
     ArrayList<Integer> currentGameData;
     static int currentClickCount = 0;
@@ -64,7 +62,7 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        ViewGroup view =(ViewGroup) inflater.inflate(R.layout.fragment_gallery, container, false);
+        ViewGroup view =(ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
 
         textView = view.findViewById(R.id.textView6);
 
@@ -104,29 +102,34 @@ public class GalleryFragment extends Fragment {
 
         textView.setOnClickListener(v -> {
 
-            currentScore = 0;
-            currentLevel = 1;
-            renew_timer();
+            if(time_end_exit) {
+                count_touch_num=0;
+                time_end_exit = false;
+                renew_timer();
 
-            // 게임 시작-----------
-            boolean isSuccess = false; // 레벨 1부터 시작 3까지 있음
-            isStarted = true;
-            try {
-                isSuccess = startGame();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            if(isStarted) {
-                check_user_click(isCorrect, currentGameData);
-            }
 
-            if(isSuccess) {
-                // 게임 성공! 레벨 3까지 무사히 성공
+                // 게임 시작-----------
+                isStarted = true;
+                try {
+                    boolean isSuccess = startGame();
+                    isCorrect = new boolean[9];
+
+                    for(int i=0; i<9; i++) {
+                        int resId = getResources().getIdentifier("game" + (i + 1), "id", getContext().getPackageName());
+                        LinearLayout game = view.findViewById(resId);
+                        setBoxBackgroundColor(game, "#ffdab9");
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if(isStarted) {
+                    check_user_click(isCorrect, currentGameData);
+                }
+            }
+            else {
+                Toast.makeText(requireContext(), "Please Wait for timeout !", Toast.LENGTH_SHORT).show();
             }
         });
-
-        isCorrect = new boolean[9];
-
 
         return view;
     }
@@ -137,6 +140,7 @@ public class GalleryFragment extends Fragment {
         if(count_touch_num != currentGameData.get(index-1)) {
             // 게임 종료
             Toast.makeText(requireContext(), "GAME OVER\nPlease Start Again", Toast.LENGTH_SHORT).show();
+            return;
         }
         else if(!isStarted) {
             Toast.makeText(requireContext(), "Please Start Game!", Toast.LENGTH_SHORT).show();
@@ -144,9 +148,10 @@ public class GalleryFragment extends Fragment {
         }
         isCorrect[currentGameData.get(index-1)-1] = true;
 
-        game.setBackgroundColor(Color.parseColor("#F08080"));
+        setBoxBackgroundColor(game, "#F08080");
 
         if(is_user_click_answers(isCorrect)) {
+            Toast.makeText(requireContext(), "level " + currentLevel + " success", Toast.LENGTH_LONG).show();
             currentLevel = update_level(currentLevel);
             currentScore = update_score(currentScore);
             count_touch_num = 0;
@@ -154,6 +159,11 @@ public class GalleryFragment extends Fragment {
             
         }
     }
+
+    public void setBoxBackgroundColor(LinearLayout game, String colorCode) {
+        game.setBackgroundColor(Color.parseColor(colorCode));
+    }
+
     
     public void renew_timer() {
         new CountDownTimer(30000, 1000) {
@@ -161,6 +171,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onTick(long l) {
                 timer.setText("TIMER\n" + (l / 1000));
+                time_end_exit = false;
             }
 
             @Override
@@ -189,7 +200,7 @@ public class GalleryFragment extends Fragment {
                         }
                         currentGameData = list;
                     }
-                }, 1000);
+                }, 0);
             }
         });
 
@@ -262,13 +273,13 @@ public class GalleryFragment extends Fragment {
 
         int delayTime = 0;
         if(level == 1) {
-            delayTime = 3000;
+            delayTime = 4000;
         }
         else if(level == 2) {
-            delayTime = 700;
+            delayTime = 3000;
         }
         else {
-            delayTime = 500;
+            delayTime = 2000;
         }
 
         new Handler(requireContext().getMainLooper()).postDelayed(() -> {

@@ -1,14 +1,14 @@
-package com.example.braintrain.ui.gallery;
+package com.example.braintrain.ui.game;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class GameViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public GameViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is gallery fragment");
     }
