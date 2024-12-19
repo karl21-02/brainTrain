@@ -2,16 +2,12 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <solid
-        android:color="#1895A3"
-        >
+        android:color="#F1F8FB"> <!-- 아주 연한 파란색 (하늘색) -->
 
     </solid>
 
     <corners
-        android:radius="40dp"
-        >
-
-
+        android:radius="20dp">
     </corners>
 
 </shape>

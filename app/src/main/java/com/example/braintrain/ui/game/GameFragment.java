@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.braintrain.R;
+import com.example.braintrain.ui.result.ResultFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,6 +48,8 @@ public class GameFragment extends Fragment {
     static int currentLevel = 1;
     static int count_touch_num=0;
     static boolean[] isCorrect;
+
+    ResultFragment resultFragment;
 
     LinearLayout game1;
     LinearLayout game2;
@@ -138,7 +143,6 @@ public class GameFragment extends Fragment {
         count_touch_num++;
         Toast.makeText(requireContext(), index + " Clicked", Toast.LENGTH_SHORT).show();
         if(count_touch_num != currentGameData.get(index-1)) {
-            // 게임 종료
             Toast.makeText(requireContext(), "GAME OVER\nPlease Start Again", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -182,11 +186,29 @@ public class GameFragment extends Fragment {
         }.start();
 
     }
+
+    public void gameDoneAndAddResult() {
+        String name = "김준희" + System.currentTimeMillis() % 1000;
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+
+        resultFragment = new ResultFragment();
+        resultFragment.setArguments(bundle);
+
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+        navController.navigate(R.id.nav_slideshow, bundle); // resultFragment는 navigation graph에 정의된 ID이어야 함
+    }
+
     public boolean startGame() throws InterruptedException {
         new Handler(requireContext().getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                if (time_end_exit || currentLevel > 3) return;
+                if (time_end_exit) return;
+
+                if(currentLevel >= 2) {
+                    gameDoneAndAddResult();
+                }
 
                 show_current_infos(currentLevel, currentScore);
 

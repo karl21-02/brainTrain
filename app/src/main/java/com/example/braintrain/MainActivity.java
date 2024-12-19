@@ -3,7 +3,10 @@ package com.example.braintrain;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.LinearLayout;
 
+import com.example.braintrain.ui.Entity.Result;
+import com.example.braintrain.ui.resultAdapter.ResultAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -13,6 +16,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.braintrain.databinding.ActivityMainBinding;
 
@@ -49,6 +54,25 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_home) {
+
+                navController.navigate(R.id.nav_home);
+
+            } else if (item.getItemId() == R.id.nav_gallery) {
+
+                navController.navigate(R.id.nav_gallery);
+
+            } else if (item.getItemId() == R.id.nav_slideshow) {
+
+                navController.navigate(R.id.nav_slideshow);
+
+            }
+
+            drawer.closeDrawers();
+            return true;
+        });
     }
 
     @Override
