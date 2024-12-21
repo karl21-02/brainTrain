@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.braintrain.LoginActivity;
 import com.example.braintrain.MainActivity;
 import com.example.braintrain.R;
 
@@ -15,7 +16,7 @@ public class LandingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(LandingPage.this, MainActivity.class);
+            Intent intent = new Intent(LandingPage.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }, 5000);
