@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.sub_exp_frag.HowFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:text="사용법" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="55dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:layout_height="55dp"
+        android:src="@drawable/card" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="11dp"
+        android:text="게임 창으로 이동하세요.\n
+하단 &quot;Brain Train&quot;을 누르면 게임 시작됩니다.\n
+이후, 타이머가 시작되는 동시에 9개의 상자에 고유의 1~9 9개 숫자가 레벨에 따라 다른 시간대로 나타납니다.
+사용자는 카드에 있던 번호 순서대로 클릭해야하며, 클릭한 상자는 위 카드로 바뀝니다.
+" />
+
+</LinearLayout>

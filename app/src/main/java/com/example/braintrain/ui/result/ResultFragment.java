@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.braintrain.R;
 import com.example.braintrain.ui.Entity.Result;
-import com.example.braintrain.ui.resultAdapter.ResultAdapter;
+import com.example.braintrain.ui.adapter.ResultAdapter;
 
 public class ResultFragment extends Fragment {
 
@@ -33,9 +33,11 @@ public class ResultFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         Bundle bundle = getArguments();
-        if(bundle != null && bundle.containsKey("name")) {
-            String name = bundle.getString("name");
-            adapter.addResult(new Result(name, "game done!"));
+        if(bundle != null && savedInstanceState == null) {
+            int level = bundle.getInt("level");
+            int score = bundle.getInt("score");
+            String userName = bundle.getString("userName");
+            adapter.addResult(new Result(level, score, userName));
             adapter.notifyDataSetChanged();
         }
 

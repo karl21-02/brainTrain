@@ -1,8 +1,9 @@
-package com.example.braintrain.ui.resultAdapter;
+package com.example.braintrain.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.braintrain.R;
 import com.example.braintrain.ui.Entity.Result;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolder> {
 
@@ -31,6 +35,13 @@ public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolde
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Result result = results.get(position);
         holder.setItem(result);
+
+        holder.imageView.setOnClickListener(v -> {
+            int position1 = holder.getAdapterPosition();
+
+            results.remove(position1);
+            notifyItemRemoved(position1);
+        });
     }
 
     @Override
@@ -58,12 +69,18 @@ public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolde
 
         TextView textView;
         TextView textView1;
+        TextView textView2;
+        ImageView imageView;
+        TextView username;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textView = itemView.findViewById(R.id.textView5);
             textView1 = itemView.findViewById(R.id.textView7);
+            textView2 = itemView.findViewById(R.id.textView27);
+            imageView = itemView.findViewById(R.id.imageView9);
+            username = itemView.findViewById(R.id.username);
 
             itemView.setOnClickListener(v -> {
                 Toast.makeText(itemView.getContext(), "pos= " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
@@ -71,10 +88,10 @@ public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolde
         }
 
         public void setItem(Result result) {
-            textView.setText(result.getName());
-            textView1.setText(result.getMobile());
+            textView.setText("LEVEL " + result.getLevel());
+            textView1.setText("SCORE " + result.getScore());
+            textView2.setText("SUCCESS TIME " + new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+            username.setText(result.getUserName());
         }
-
-
     }
 }

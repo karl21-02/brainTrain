@@ -20,33 +20,28 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_weight="0.3"
+                android:textSize="15dp"
+                android:text="Hello," />
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Hello," />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Kimjunhee"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:text="KIM JUN HEE(.dev)"
+                android:textSize="22dp"
+                android:textColor="#212529"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -73,7 +68,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="SCORE\n0"
-                    android:textColor="@color/black" />
+                    android:textColor="#212529" />
 
 
                 <TextView
@@ -83,7 +78,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="LEVEL\n1"
-                    android:textColor="@color/black" />
+                    android:textColor="#212529" />
 
             </LinearLayout>
 
@@ -123,7 +118,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -147,7 +143,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -171,7 +168,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -193,7 +191,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -214,7 +213,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -235,7 +235,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -256,7 +257,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -277,7 +279,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -298,7 +301,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="N"
+            android:text=""
+            android:textSize="40dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -344,7 +348,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Brain Train"
-                android:textColor="#cfffe5"
+                android:textColor="#FFFF00"
                 android:textSize="40dp"
                 android:textStyle="bold" />
 

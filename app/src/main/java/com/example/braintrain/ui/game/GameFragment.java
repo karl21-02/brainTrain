@@ -1,5 +1,7 @@
 package com.example.braintrain.ui.game;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -7,6 +9,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.braintrain.R;
 import com.example.braintrain.ui.result.ResultFragment;
@@ -25,6 +29,7 @@ import java.util.Collections;
 public class GameFragment extends Fragment {
 
     TextView textView;
+    TextView textView8;
 
     TextView timer;
     TextView score;
@@ -63,13 +68,18 @@ public class GameFragment extends Fragment {
 
     boolean isStarted;
 
+    String userName;
+    static boolean check_user_input;
+
+    ViewGroup view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        ViewGroup view =(ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
+        view =(ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
 
         textView = view.findViewById(R.id.textView6);
+        textView8 = view.findViewById(R.id.textView8);
 
         timer = view.findViewById(R.id.textView4);
         score = view.findViewById(R.id.textView50);
@@ -96,8 +106,6 @@ public class GameFragment extends Fragment {
         game8 = view.findViewById(R.id.game8);
         game9 = view.findViewById(R.id.game9);
 
-
-
         ///////////
 
         currentClickCount = 0;
@@ -107,36 +115,75 @@ public class GameFragment extends Fragment {
 
         textView.setOnClickListener(v -> {
 
-            if(time_end_exit) {
-                count_touch_num=0;
-                time_end_exit = false;
-                renew_timer();
-
-
-                // 게임 시작-----------
-                isStarted = true;
-                try {
-                    boolean isSuccess = startGame();
-                    isCorrect = new boolean[9];
-
-                    for(int i=0; i<9; i++) {
-                        int resId = getResources().getIdentifier("game" + (i + 1), "id", getContext().getPackageName());
-                        LinearLayout game = view.findViewById(resId);
-                        setBoxBackgroundColor(game, "#ffdab9");
-                    }
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                if(isStarted) {
-                    check_user_click(isCorrect, currentGameData);
-                }
+            if(!check_user_input) { // 사용자 이름 입력받고 겜 시작
+                getUserName();
+                check_user_input = true;
             }
-            else {
-                Toast.makeText(requireContext(), "Please Wait for timeout !", Toast.LENGTH_SHORT).show();
+            else { // 사용자 이름 입력 받았으면 그냥 진행
+                startGameWithUserName();
             }
         });
 
         return view;
+    }
+
+    public void startGameWithUserName() {
+        if(time_end_exit) {
+            count_touch_num=0;
+            time_end_exit = false;
+            renew_timer();
+
+
+            // 게임 시작-----------
+            isStarted = true;
+            try {
+                boolean isSuccess = startGame();
+                isCorrect = new boolean[9];
+
+                for(int i=0; i<9; i++) {
+                    int resId = getResources().getIdentifier("game" + (i + 1), "id", getContext().getPackageName());
+                    LinearLayout game = view.findViewById(resId);
+                    setBoxBackgroundColor(game, "#ffdab9");
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if(isStarted) {
+                check_user_click(isCorrect, currentGameData);
+            }
+        }
+        else {
+            Toast.makeText(requireContext(), "Please Wait for timeout !", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean getUserName() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_input_name, null);
+        alertDialog.setView(dialogView);
+
+        EditText editTextName = dialogView.findViewById(R.id.editTextName);
+
+        alertDialog.setTitle("Enter Your Name");
+        alertDialog.setPositiveButton("OK", (dialog, which) -> {
+            userName = editTextName.getText().toString(); // 사용자 이름 입력 받기
+
+            TextView textView8 = getView().findViewById(R.id.textView8);
+            if(userName == null || userName.equals("")) {
+                textView8.setText("KIM JUN HEE(.dev)");
+            }
+            else {
+                textView8.setText(userName);
+            }
+            startGameWithUserName();
+        });
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.setCancelable(false);
+        dialog.show();
+
+        return true;
     }
 
     private void handleBoxClick(int index, LinearLayout game) {
@@ -152,7 +199,7 @@ public class GameFragment extends Fragment {
         }
         isCorrect[currentGameData.get(index-1)-1] = true;
 
-        setBoxBackgroundColor(game, "#F08080");
+        setBoxBackgroundPic(game);
 
         if(is_user_click_answers(isCorrect)) {
             Toast.makeText(requireContext(), "level " + currentLevel + " success", Toast.LENGTH_LONG).show();
@@ -160,6 +207,9 @@ public class GameFragment extends Fragment {
             currentScore = update_score(currentScore);
             count_touch_num = 0;
             show_current_infos(currentLevel, currentScore);
+            if(currentLevel >= 2) {
+                gameDoneAndAddResult();
+            }
             
         }
     }
@@ -168,6 +218,9 @@ public class GameFragment extends Fragment {
         game.setBackgroundColor(Color.parseColor(colorCode));
     }
 
+    public void setBoxBackgroundPic(LinearLayout game) {
+        game.setBackgroundResource(R.drawable.card);
+    }
     
     public void renew_timer() {
         new CountDownTimer(30000, 1000) {
@@ -188,16 +241,24 @@ public class GameFragment extends Fragment {
     }
 
     public void gameDoneAndAddResult() {
-        String name = "김준희" + System.currentTimeMillis() % 1000;
+
+        isStarted = false;
 
         Bundle bundle = new Bundle();
-        bundle.putString("name", name);
+        bundle.putInt("level", currentLevel);
+        bundle.putInt("score", currentScore);
+        bundle.putString("userName", userName);
+
+        currentClickCount = 0;
+        currentScore = 0;
+        currentLevel = 1;
+        count_touch_num=0;
 
         resultFragment = new ResultFragment();
         resultFragment.setArguments(bundle);
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-        navController.navigate(R.id.nav_slideshow, bundle); // resultFragment는 navigation graph에 정의된 ID이어야 함
+        navController.navigate(R.id.nav_slideshow, bundle);
     }
 
     public boolean startGame() throws InterruptedException {
@@ -205,10 +266,6 @@ public class GameFragment extends Fragment {
             @Override
             public void run() {
                 if (time_end_exit) return;
-
-                if(currentLevel >= 2) {
-                    gameDoneAndAddResult();
-                }
 
                 show_current_infos(currentLevel, currentScore);
 
@@ -326,7 +383,7 @@ public class GameFragment extends Fragment {
     }
 
     public int update_score(int score) {
-        return score + 1;
+        return (score + 1) * currentLevel;
     }
 
     private ArrayList<Integer> createGameData() {

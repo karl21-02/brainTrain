@@ -15,11 +15,21 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.braintrain.ui.game.GameFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game">
 
+        <action
+            android:id="@+id/action_navigation_game_to_navigation_result"
+            app:destination="@id/nav_slideshow" />
+
+    </fragment>
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.braintrain.ui.result.ResultFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+    <action
+        android:id="@+id/action_navigation_result_to_navigation_game"
+        app:destination="@id/nav_gallery" />
+    </fragment>
+
 </navigation>

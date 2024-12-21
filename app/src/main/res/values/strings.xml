@@ -12,5 +12,19 @@
     <string name="menu_slideshow">result</string>
     <string name="landingPage">landingPage</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="game_exp">The developer guarantees that this app will activate your brain 100%.</string>
+    <string name="sub_title">This Game is to Train your Brain</string>
+    <string name="title">Brain Train</string>
+    <string name="title_up">STUDY</string>
+    <string name="click_here">Click Here!</string>
+    <string name="game_functions">Game Functions</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>

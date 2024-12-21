@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.sub_exp_frag.MotivationFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:gravity="center"
+        android:text="Motivation"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:textSize="12dp"
+        android:text="항상 일어나자마자 씻고 준비하고 미래 도서관으로 가는 길은 정신이 몽롤합니다.\n
+꺠어있는 듯 아닌 듯...\n
+미래 도서관에 도착하자마자 공부를 시작하면 1시간은 집중을 하지 못 하고 날려버립니다. 그래서, 가는 길에 뇌를 단련해 바로 시작하도록 이 앱을 만들게 됨...
+24시간이 부족한 대학생에게 이 시간 마저도 허투르 쓰지 않기 위해...
+" />
+
+</LinearLayout>
