@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
@@ -53,8 +54,6 @@ public class GameFragment extends Fragment {
     static int currentLevel = 1;
     static int count_touch_num=0;
     static boolean[] isCorrect;
-
-    ResultFragment resultFragment;
 
     LinearLayout game1;
     LinearLayout game2;
@@ -253,9 +252,9 @@ public class GameFragment extends Fragment {
         currentScore = 0;
         currentLevel = 1;
         count_touch_num=0;
-
-        resultFragment = new ResultFragment();
-        resultFragment.setArguments(bundle);
+//
+//        resultFragment = new ResultFragment();
+//        resultFragment.setArguments(bundle);
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.nav_slideshow, bundle);

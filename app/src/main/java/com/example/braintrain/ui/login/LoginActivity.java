@@ -1,11 +1,11 @@
-package com.example.braintrain;
+package com.example.braintrain.ui.login;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.braintrain.ui.login.LoginFragment;
+import com.example.braintrain.R;
 
 public class LoginActivity extends AppCompatActivity {
 

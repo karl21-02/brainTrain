@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.braintrain.LoginActivity;
 import com.example.braintrain.MainActivity;
 import com.example.braintrain.R;
 import com.example.braintrain.data.DataBaseHelper;
@@ -45,6 +42,9 @@ public class LoginFragment extends Fragment {
         signUpButton = view.findViewById(R.id.button);
         loadingProgressBar = view.findViewById(R.id.loading);
         createDatabase();
+        database.delete("user", "email = ? AND password = ?", new String[]{"", ""});
+
+
 
         loginButton.setOnClickListener(v -> {
             loadingProgressBar.setVisibility(View.VISIBLE);
@@ -58,6 +58,9 @@ public class LoginFragment extends Fragment {
             String password = passwordEditText.getText().toString();
             if(!email.equals("") && email != null && !password.equals("") && password != null) {
                 doSignUp(email, password);
+            }
+            else {
+                Toast.makeText(getContext(), "이메일과 비밀번호를 입력해주세요!", Toast.LENGTH_SHORT).show();
             }
         });
     }

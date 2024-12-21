@@ -6,8 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.braintrain.LoginActivity;
-import com.example.braintrain.MainActivity;
+import com.example.braintrain.ui.login.LoginActivity;
 import com.example.braintrain.R;
 
 public class LandingPage extends AppCompatActivity {

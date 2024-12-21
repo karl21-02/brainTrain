@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolder> {
 
-    static ArrayList<Result> results = new ArrayList<>();
+    private ArrayList<Result> results = new ArrayList<>();
 
     @NonNull
     @Override
@@ -33,14 +33,17 @@ public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if(position < 0 || position >= results.size()) return;
         Result result = results.get(position);
         holder.setItem(result);
 
         holder.imageView.setOnClickListener(v -> {
             int position1 = holder.getAdapterPosition();
 
-            results.remove(position1);
-            notifyItemRemoved(position1);
+            if(position1 != RecyclerView.NO_POSITION) {
+                results.remove(position1);
+                notifyItemRemoved(position1);
+            }
         });
     }
 
@@ -54,15 +57,23 @@ public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolde
     }
 
     public void setResults(ArrayList<Result> results) {
-        ResultAdapter.results = results;
+        this.results = results;
+        notifyDataSetChanged();
     }
 
     public Result getResult(int position) {
+        if (position < 0 || position >= results.size()) {
+            return null;
+        }
         return results.get(position);
     }
 
     public void setResult(int position, Result result) {
+        if (position < 0 || position >= results.size()) {
+            return;
+        }
         results.set(position, result);
+        notifyItemChanged(position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

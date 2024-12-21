@@ -1,9 +1,14 @@
 package com.example.braintrain;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.braintrain.ui.result.ResultFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -17,10 +22,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.braintrain.databinding.ActivityMainBinding;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +39,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
+        binding.appBarMain.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .setAnchorView(R.id.fab).show());
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setOpenableLayout(drawer)
@@ -50,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        ///////////////////////////////////////
+
+
+        setSupportActionBar(binding.appBarMain.toolbar);
+
+        if (getSupportActionBar() != null) {
+            new ColorDrawable(getResources().getColor(R.color.loyal_blue, null));
+        }
 
         navigationView.setNavigationItemSelectedListener(item -> {
 
@@ -61,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(id == R.id.nav_home) {
                 navController.navigate(R.id.nav_home);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+            else if(id == R.id.nav_slideshow) {
+                navController.navigate(R.id.nav_slideshow);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -87,4 +104,18 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+        int curId = item.getItemId();
+
+        if(curId == R.id.action_settings) {
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_settings);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

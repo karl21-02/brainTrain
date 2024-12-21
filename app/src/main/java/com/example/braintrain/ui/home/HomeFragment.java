@@ -24,12 +24,10 @@ import com.example.braintrain.ui.adapter.HomeItemAdapter;
 import com.example.braintrain.ui.adapter.SubExplanationItemsAdapter;
 import com.example.braintrain.ui.app_exp_dialog.ExplanationDiaFragment;
 import com.example.braintrain.ui.adapter.WayImageSlideAdapter;
-import com.example.braintrain.ui.sub_exp_frag.FunctionFragment;
 import com.example.braintrain.ui.sub_exp_frag.IntroduceFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -94,7 +92,7 @@ public class HomeFragment extends Fragment {
 
 
         textView.setOnClickListener(v -> {
-            String text = "시험공부를 하려면 원룸에서 미래의 도서관까지 걸어가야 합니다. 하지만, 학점을 잘 받기 위해서 방금 일어난 준희가 미래 도서관에 도착하자마자 공부하려면 가는 시간 동안 뇌를 단련해야한다!";
+            String text = "시험공부를 하려면 원룸에서 미래 도서관까지 걸어가야 합니다. 하지만, 학점을 잘 받기 위해서 방금 일어난 준희가 미래 도서관에 도착하자마자 공부하려면 가는 시간 동안 뇌를 단련해야한다!";
             ExplanationDiaFragment dig = ExplanationDiaFragment.newInstance(text);
             dig.show(getParentFragmentManager(), "DetailDialog");
         });
