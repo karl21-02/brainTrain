@@ -12,4 +12,22 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/logout">
+
+        <Preference
+            app:key="logout"
+            app:title="@string/logout_title"
+            app:summary="@string/logout_summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/signout">
+
+        <Preference
+            app:key="signout"
+            app:title="@string/signout"
+            app:summary="@string/signoutsummary"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

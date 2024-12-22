@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/textView26"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="40dp"
@@ -31,14 +31,17 @@
         android:id="@+id/recyclerView"
         android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="400dp" >
+        android:layout_weight="0.7"
+        android:layout_height="0dp" >
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/textView28"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.3"
         android:background="@color/loyal_blue"
         android:gravity="center"
         android:text="YOU DON'T KNOW ME SON"

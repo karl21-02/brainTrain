@@ -65,8 +65,8 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    DataBaseHelper dbHelper;
-    SQLiteDatabase database;
+    public static DataBaseHelper dbHelper;
+    public static SQLiteDatabase database;
 
     private void createDatabase() {
         dbHelper = new DataBaseHelper(getContext());
@@ -112,6 +112,9 @@ public class LoginFragment extends Fragment {
 
             handler.post(() -> {
                 if (isLoginSuccessful) {
+
+                    getContext().getSharedPreferences("userInfo", getContext().MODE_PRIVATE).edit().putString("email", email).apply();
+
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                     getActivity().finish();

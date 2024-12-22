@@ -4,11 +4,13 @@ public class Result {
     int level;
     int score;
     String userName;
+    String curTime;
 
-    public Result(int level, int score, String userName) {
+    public Result(int level, int score, String userName, String time) {
         this.level = level;
         this.score = score;
         this.userName = userName;
+        this.curTime = time;
     }
 
     public int getLevel() {
@@ -33,5 +35,13 @@ public class Result {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getTime() {
+        return curTime;
+    }
+
+    public void setTime(String time) {
+        this.curTime = time;
     }
 }

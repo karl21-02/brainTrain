@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolder> {
 
@@ -99,9 +100,10 @@ public class ResultAdapter extends  RecyclerView.Adapter<ResultAdapter.ViewHolde
         }
 
         public void setItem(Result result) {
+
             textView.setText("LEVEL " + result.getLevel());
             textView1.setText("SCORE " + result.getScore());
-            textView2.setText("SUCCESS TIME " + new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+            textView2.setText("SUCCESS TIME " + result.getTime());
             username.setText(result.getUserName());
         }
     }

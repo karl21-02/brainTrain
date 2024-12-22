@@ -2,6 +2,7 @@ package com.example.braintrain.ui.game;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -22,10 +23,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.braintrain.R;
+import com.example.braintrain.ui.Entity.Result;
 import com.example.braintrain.ui.result.ResultFragment;
+import com.example.braintrain.ui.result.ResultSingleton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class GameFragment extends Fragment {
 
@@ -67,7 +74,7 @@ public class GameFragment extends Fragment {
 
     boolean isStarted;
 
-    String userName;
+    static String userName;
     static boolean check_user_input;
 
     ViewGroup view;
@@ -123,6 +130,15 @@ public class GameFragment extends Fragment {
             }
         });
 
+        if (savedInstanceState != null) {
+            currentLevel = savedInstanceState.getInt("currentLevel", 1);
+            currentScore = savedInstanceState.getInt("currentScore", 0);
+        }
+
+        score.setText("SCORE\n" + currentScore);
+        level.setText("LEVEL\n" + currentLevel);
+        textView8.setText(userName);
+
         return view;
     }
 
@@ -156,6 +172,14 @@ public class GameFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        score.setText("SCORE\n" + currentScore);
+        level.setText("LEVEL\n" + currentLevel);
+        textView8.setText(userName);
+    }
+
     public boolean getUserName() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
@@ -166,7 +190,7 @@ public class GameFragment extends Fragment {
 
         alertDialog.setTitle("Enter Your Name");
         alertDialog.setPositiveButton("OK", (dialog, which) -> {
-            userName = editTextName.getText().toString(); // 사용자 이름 입력 받기
+            userName = editTextName.getText().toString();
 
             TextView textView8 = getView().findViewById(R.id.textView8);
             if(userName == null || userName.equals("")) {
@@ -183,6 +207,13 @@ public class GameFragment extends Fragment {
         dialog.show();
 
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("currentLevel", currentLevel);
+        outState.putInt("currentScore", currentScore);
     }
 
     private void handleBoxClick(int index, LinearLayout game) {
@@ -206,7 +237,7 @@ public class GameFragment extends Fragment {
             currentScore = update_score(currentScore);
             count_touch_num = 0;
             show_current_infos(currentLevel, currentScore);
-            if(currentLevel >= 2) {
+            if(currentLevel >= 3) {
                 gameDoneAndAddResult();
             }
             
@@ -242,22 +273,20 @@ public class GameFragment extends Fragment {
     public void gameDoneAndAddResult() {
 
         isStarted = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        String curTime = sdf.format(new Date());
 
-        Bundle bundle = new Bundle();
-        bundle.putInt("level", currentLevel);
-        bundle.putInt("score", currentScore);
-        bundle.putString("userName", userName);
+        Result result = new Result(currentLevel, currentScore, userName, curTime);
+        ResultSingleton.getInstance().addResult(result);
 
         currentClickCount = 0;
         currentScore = 0;
         currentLevel = 1;
         count_touch_num=0;
-//
-//        resultFragment = new ResultFragment();
-//        resultFragment.setArguments(bundle);
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-        navController.navigate(R.id.nav_slideshow, bundle);
+        navController.navigate(R.id.nav_slideshow);
     }
 
     public boolean startGame() throws InterruptedException {

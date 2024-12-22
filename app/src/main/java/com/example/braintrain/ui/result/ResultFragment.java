@@ -19,6 +19,7 @@ import com.example.braintrain.R;
 import com.example.braintrain.ui.Entity.Result;
 import com.example.braintrain.ui.adapter.ResultAdapter;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ResultFragment extends Fragment {
@@ -41,14 +42,11 @@ public class ResultFragment extends Fragment {
         adapter = new ResultAdapter();
         recyclerView.setAdapter(adapter);
 
-        Bundle bundle = getArguments();
-        if(bundle != null && savedInstanceState == null && bundle.containsKey("level") && bundle.containsKey("score")) {
-            int level = bundle.getInt("level");
-            int score = bundle.getInt("score");
-            String userName = bundle.getString("userName");
-            adapter.addResult(new Result(level, score, userName));
-            adapter.notifyDataSetChanged();
+        ArrayList<Result> results = ResultSingleton.getInstance().getResults();
+        for(Result result : results) {
+            adapter.addResult(result);
         }
+        adapter.notifyDataSetChanged();
 
 //        adapter.addResult(new Result(1, 2, "userName"));
 //        adapter.addResult(new Result(1, 2, "userName"));

@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
